@@ -12,5 +12,6 @@ Izziv2
 LIBRARIES
 =========
 charts4j-1.3
-	library for plotting and charts
-	needded for Izziv2 aka LinearSearch vs BissectionSearch
+	library for google charts api - useless
+stdlib.jar
+	princeton, gpl, general std lib
