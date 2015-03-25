@@ -15,3 +15,4 @@ charts4j-1.3
 	library for google charts api - useless
 stdlib.jar
 	princeton, gpl, general std lib
+	http://introcs.cs.princeton.edu/java/stdlib/
