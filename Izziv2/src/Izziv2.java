@@ -25,7 +25,7 @@ public class Izziv2 {
 	public void run() {
 		Random r = new Random();
 		int c = 0;
-		for (int i = 100000; i <= 100000; i += 10000) { // TODO
+		for (int i = 100000; i <= 1000000; i += 10000) {
 			generate(i);
 			long tL[] = new long[1000];
 			long tB[] = new long[1000];
@@ -48,16 +48,15 @@ public class Izziv2 {
 			}
 			timesL[c] = aL / tL.length;
 			timesB[c] = aB / tB.length;
-			// debug
 			System.out.println("n:" + i + "   linearno: " + timesL[c] + "  bisekcija: " + timesB[c]);
-			//
 			c++;
 		}
 		
 		// plot
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                Framex.createAndShowGUI();
+            	Framex framex = new Framex(timesL, timesB);
+                framex.createAndShowGUI();
             }
         });
 	}
