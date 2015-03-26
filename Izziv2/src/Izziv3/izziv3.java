@@ -1,4 +1,4 @@
-package Izziv3;
+//package Izziv3;
 
 import java.util.Scanner;
 
@@ -19,64 +19,66 @@ public class izziv3 {
     void run(int n) {
     	table = new int[n];
         Scanner sc = new Scanner(System.in);
-        try {
-            for (int i=0; i<n; i++)
-                table[i] = sc.nextInt();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+		for (int i=0; i<n; i++)
+			table[i] = sc.nextInt();
         //
         for (int i=0; i<table.length; i++) {
-        	System.out.print(table[1]);
+        	System.out.print(table[i]);
         }
     	System.out.println();
     	
-        heap();
+    	buildHeap();
         //
         for (int i=0; i<table.length; i++) {
-        	System.out.print(table[1]);
+        	System.out.print(table[i]);
         }
     	System.out.println();
-        
-    	sort();
+        //
+        heapSort();
         //
         for (int i=0; i<table.length; i++) {
-        	System.out.print(table[1]);
+        	System.out.print(table[i]);
         }
     	System.out.println();
+        //
     }
     
-    void sink(int rI) {
-        int sinister = 2*rI+1;
-        int dexter = 2*rI+2;
-        if (table[rI] < table[sinister] || table[rI] < table[dexter]) {
-        	int i = table[sinister] < table[dexter] ? dexter : sinister;
-        	int t = table[rI];
-            if (i == dexter) {
-            	table[rI] = table[dexter];
-            	table[dexter] = t;
-            } else {
-            	table[rI] = table[sinister];
-            	table[sinister] = t;
-            }
-            sink(i);
-        }
-    }
+    void heapSort() {
+		for (int i = table.length-1; i > 1; i--) {
+			swap(table[i], table[0]);
+			sink(i);
+		}
+	}
     
-    void heap() {
-	    for (int i=table.length/2; i>=0; i--) {
-	    	sink(i);
-	    }
-    }
+    void buildHeap() {
+		for (int i = table.length/2; i >= 0; i--)
+			sink(i);
+	}
+	
+	void sink(int index) {
+		int left = 2*index+1;
+		int right = 2*index+2;
+		// ni otrok
+		if (left >= table.length || right >= table.length)
+			return;
+		// pogrezni po potrebi
+		if (table[left] < table[index] || table[right] < table[index]){
+			// zamenjaj z najmanjšim
+			if (table[left] < table[right]) {
+				swap(left, index);
+				// rekurzivno
+				sink(left);
+			} else {
+				swap(right, index);
+				// rekurzivno
+				sink(left);
+			}
+		}
+	}
     
-    void sort() {
-    	for (int i=table.length; i>=0; i--) {
-    		int t = table[0];
-    		table[1] = table[i];
-    		table[i] = t;
-    		sink(table.length-i);
-    	}
-    }
-    
+    void swap(int i1, int i2) {
+		int temp = table[i1];
+		table[i1] = table[i2];
+		table[i2] = temp;
+	}
 }
