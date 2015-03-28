@@ -17,7 +17,7 @@ public class izziv3 {
     }
     
     void run(int n) {
-    	table = new int[n];
+    	this.table = new int[n];
         Scanner sc = new Scanner(System.in);
 		for (int i=0; i<n; i++)
 			table[i] = sc.nextInt();
@@ -25,34 +25,54 @@ public class izziv3 {
         for (int i=0; i<table.length; i++) {
         	System.out.print(table[i]);
         }
+        System.out.println(table.length);
     	System.out.println();
     	
+    	System.out.println("*******************");
     	buildHeap();
+    	System.out.println("*******************");
         //
         for (int i=0; i<table.length; i++) {
         	System.out.print(table[i]);
         }
+    	System.out.println();
     	System.out.println();
         //
         heapSort();
         //
+        System.out.println();
         for (int i=0; i<table.length; i++) {
         	System.out.print(table[i]);
         }
+    	System.out.println();
     	System.out.println();
         //
     }
     
     void heapSort() {
 		for (int i = table.length-1; i > 1; i--) {
-			swap(table[i], table[0]);
+			System.out.println(i);
+			swap(i, 0);
 			sink(i);
+			//
+			System.out.println();
+			for (int j=0; j<table.length; j++) {
+				System.out.print(table[j]);
+			}
+			System.out.println();
+			//
 		}
 	}
     
     void buildHeap() {
 		for (int i = table.length/2; i >= 0; i--)
 			sink(i);
+			//
+			for (int j=0; j<table.length; j++) {
+				System.out.print(table[j]);
+			}
+			System.out.println();
+			//
 	}
 	
 	void sink(int index) {
