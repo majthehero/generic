@@ -23,6 +23,7 @@ public class Izziv3 {
 	
 	void heapSort() {
 		buildHeap();
+		printout();
 		while (N > 1) {
 			swap(0, N - 1);
 			N--;
@@ -33,7 +34,7 @@ public class Izziv3 {
 	
 	void printout() {
 		for (int i=0; i<N; i++) {
-			if (((i) & (i-1)) == 0) {
+			if (((i+1) & (i)) == 0 && i > 0) {
 				System.out.print("| ");
 			}
 			System.out.print(tabela[i] + " ");
