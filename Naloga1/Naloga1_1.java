@@ -95,8 +95,33 @@ public class Naloga1_1 {
 		}
 	}
 	
-	void selectionSort() {;}
-	void insertionSort() {;}
+	void selectionSort() {
+		for (int j = 0; j < this.N - 1; j++) {
+			int iX = j;
+			for (int i = j + 1; i < this.N; i++) {
+				if (needSwap(this.table[iX], this.table[i]))
+					iX = i;
+			}
+			if (iX != j)
+				swap(iX, j);
+			///
+			for (int k = 0; k < this.table.length; k++) {
+				System.out.print(this.table[k] + " ");
+			}
+			System.out.println();
+			///
+		}
+	}
+	
+	void insertionSort() {
+		for (int i = 0; i < this.N; i++) {
+			int j = i;
+			while (j > 0 && needSwap(this.table[j - 1], this.table[j])) {
+				swap(j - 1, j);
+				j--;
+			}
+		}
+	}
 	
 	void heapSort() {
 		buildHeap();
@@ -109,13 +134,55 @@ public class Naloga1_1 {
 		hsSort();
 	}
 	
+	void quickSort() { // TODO
+		
+	}
 	
-	void quickSort() {;}
-	void mergeSort() {;}
+	void mergeSort() { // TODO
+		
+	}
 	
-	
-	
-	// za bs
+	// za hs
+	void hsSort () {
+		buildHeap();
+		printoutHS();
+		while (N > 1) {
+			swap(0, N - 1);
+			N--;
+			heapify(0);
+			printoutHS();
+		}
+	}
+	void printoutHS() {
+		for (int i=0; i<N; i++) {
+			if (((i+1) & (i)) == 0 && i > 0) {
+				System.out.print("| ");
+			}
+			System.out.print(table[i] + " ");
+		}
+		System.out.println();
+	}
+	void buildHeap() {
+        for (int i = N / 2; i >= 0; i--)
+            heapify(i);
+    }
+	void heapify(int i) {
+		int left = i * 2 + 1;
+        int right = i * 2 + 2;
+        int largest;
+        if (left < N && needSwap(table[i], table[left]))
+            largest = left;
+        else
+            largest = i;
+        if (right < N && needSwap(table[largest], table[right]))
+            largest = right;
+            
+        if (largest != i) {
+            swap(i, largest);
+            heapify(largest);
+        }
+	}
+	// za bs oz splošno
 	boolean needSwap(int i1, int i2) {
 		if (this.direction.equals("up"))
 			return (i1 > i2);
@@ -128,7 +195,6 @@ public class Naloga1_1 {
 		}
 		return false;
 	}
-	
 	void swap(int i1, int i2) {
 		int temp = table[i1];
 		table[i1] = table[i2];
