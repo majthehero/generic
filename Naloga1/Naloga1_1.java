@@ -65,7 +65,7 @@ public class Naloga1_1 {
 				heapSort();
 				break;
 			case "qs":
-				quickSort();
+				quickSort(0, this.N);
 				break;
 			case "ms":
 				mergeSort();
@@ -134,8 +134,37 @@ public class Naloga1_1 {
 		hsSort();
 	}
 	
-	void quickSort() { // TODO
+	void quickSort(int left, int right) { // TODO
+		// izbira pivota
+		int pivot = (left + right) / 2;
 		
+		// delitev tabele
+		int i = left;
+		int j = right - 1;
+		while (i <= j) {
+			while (needSwap(this.table[pivot], this.table[i]))
+				i++;
+			while (needSwap(this.table[j], this.table[pivot]))
+				j--;
+			if (i <= j) {
+				swap(i, j);
+				i++;
+				j--;
+			}
+		}
+		///
+		for (i = left; i < pivot; i++)
+			System.out.print(this.table[i] + " ");
+		System.out.print("| ");
+		for (i = pivot; i < right; i++)
+			System.out.print(this.table[i] + " ");
+		System.out.println();
+		///
+		// rekurzivni klic
+		if (left < pivot)
+			quickSort(left, pivot - 1);
+		if (right > pivot)
+			quickSort(pivot + 1, right);
 	}
 	
 	void mergeSort() { // TODO
