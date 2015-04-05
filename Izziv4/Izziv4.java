@@ -206,31 +206,52 @@ public class Izziv4 {
 		int iMin = 0;
 		int currEl = 0;
 		while (!allEOF) {
-			// najmanjši
+			
+			allEOF = true; // konec vseh file-ov
+			allEOT = true; // konec vseh zaporedij
+			
+			// poišči najmanjšega
 			currEl = Integer.MAX_VALUE;
-			allEOT = true;
-			allEOF = true;
 			for (int i = 0; i < ins.length; i++) {
 				if (!ins[i].isStraightEnd(runLen)) {
-					if (ins[i].current < ins[iMin].current)
+					if (ins[i].current < currEl) {
 						iMin = i;
+						currEl = ins[i].current;
+					}
+				}
+			}
+			
+			// poglej konec fajlov
+			allEOF = true;
+			for (int i=0; i<ins.length; i++) {
+				if (!ins[i].isEndOfTrack()) {
+					allEOF = false;
+				}
+			}
+			if (allEOF) {
+				break;
+			}
+			
+			// poglej konec zaporedij
+			allEOT = true;
+			for (int i=0; i<ins.length; i++) {
+				if (!ins[i].isStraightEnd(runLen))
+				{
 					allEOT = false;
 				}
 			}
-			System.out.println("imin: " + iMin + " value: " + currEl);
-			for (int i = 0; i < ins.length; i++) {
-				if (!ins[i].isEndOfTrack())
-					allEOF = false;
+			if (allEOT) {
+				for (int i=0; i<ins.length; i++) {
+					if (!ins[i].isEndOfTrack()) {
+						ins[i].resetRun();
+					}
+				}
+				continue;
 			}
 			
-			if (allEOT) {
-				for (int i = 0; i < ins.length; i++) {
-					ins[i].resetRun();
-					continue;
-				}
-			}
+			System.out.println("imin: " + iMin + " value: " + currEl);
+			
 			// prepiši premakni
-			currEl = ins[iMin].current;
 			ins[iMin].advance();
 			out.write(currEl);
 		}
