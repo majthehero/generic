@@ -161,28 +161,54 @@ public class Izziv4 {
 
 	public static void main(String[] args) throws IOException {
 		Izziv4 i = new Izziv4();
-		i.run();
+		i.run(args);
 	}
 
-	void run() {
+	void run(String[] args) {
 		try {
 			// test porazdeljevanje
-			InTrack it = new InTrack("test_in.txt");
-			OutTrack[] ots = OutTrack.createTracks("test_out", 1, 3);
-			distribute(it, ots, 3);
+			//~ InTrack it = new InTrack("test_in.txt");
+			//~ OutTrack[] ots = OutTrack.createTracks("test_out", 1, 3);
+			//~ distribute(it, ots, 3);
 			// test zlivanje
-			InTrack its[] = InTrack.openTracks("test_out", 1, 3);
-			OutTrack ot = new OutTrack("test_done.txt");
-			merge(its, ot, 3);
-
+			//~ InTrack its[] = InTrack.openTracks("test_out", 1, 3);
+			//~ OutTrack ot = new OutTrack("test_done.txt");
+			//~ merge(its, ot, 3);
+			
+			String trackname = args[0];
+			InTrack intrack = new InTrack(trackname);
+			trackname = args[1];
+			int trackcount = Integer.parseInt(args[2]);
+			
+			sort_unbalanced(intrack, trackname, trackcount);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 	
+	
 	void sort_unbalanced(InTrack intrack, String trackName, int trackCount) {
-		
+		int runLen = 1;
+		boolean done = false;
+		int pass = 0;
+		while (!done) {
+			try {
+				OutTrack[] outs = OutTrack.createTracks(trackName, pass, trackCount);
+				distribute(intrack, outs, runLen);
+				runLen *= 2;
+				InTrack[] ins = InTrack.openTracks(trackName, pass, trackCount);
+				OutTrack out = new OutTrack(trackName);
+				merge(ins, out, runLen);
+				pass++;
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
 	}
 	
 	void distribute(InTrack in, OutTrack[] outs, int runLen) {
@@ -205,11 +231,9 @@ public class Izziv4 {
 		boolean allEOT = false;
 		int iMin = 0;
 		int currEl = 0;
-		while (!allEOF) {
-			
+		while (!allEOF) {		
 			allEOF = true; // konec vseh file-ov
 			allEOT = true; // konec vseh zaporedij
-			
 			// poišči najmanjšega
 			currEl = Integer.MAX_VALUE;
 			for (int i = 0; i < ins.length; i++) {
@@ -220,7 +244,6 @@ public class Izziv4 {
 					}
 				}
 			}
-			
 			// poglej konec fajlov
 			allEOF = true;
 			for (int i=0; i<ins.length; i++) {
@@ -231,7 +254,6 @@ public class Izziv4 {
 			if (allEOF) {
 				break;
 			}
-			
 			// poglej konec zaporedij
 			allEOT = true;
 			for (int i=0; i<ins.length; i++) {
@@ -248,34 +270,10 @@ public class Izziv4 {
 				}
 				continue;
 			}
-			
 			System.out.println("imin: " + iMin + " value: " + currEl);
-			
 			// prepiši premakni
 			ins[iMin].advance();
 			out.write(currEl);
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
