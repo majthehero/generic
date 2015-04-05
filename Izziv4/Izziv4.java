@@ -160,14 +160,32 @@ class OutTrack {
 public class Izziv4 {
 
 	public static void main(String[] args) throws IOException {
-		
+		Izziv4 i = new Izziv4();
+		i.run();
+	}
+
+	void run() {
+		try {
+			// test porazdeljevanje
+			InTrack it = new InTrack("test_in.txt");
+			OutTrack[] ots = OutTrack.createTracks("test_out", 1, 3);
+			distribute(it, ots, 3);
+			// test zlivanje
+			InTrack its[] = InTrack.openTracks("test_out", 1, 3);
+			OutTrack ot = new OutTrack("test_done.txt");
+			merge(its, ot, 3);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
 	}
 	
 	void sort_unbalanced(InTrack intrack, String trackName, int trackCount) {
 		
 	}
 	
-	void distribute(InTrack in, OutTrack[] outs, int runLen) { // TEST
+	void distribute(InTrack in, OutTrack[] outs, int runLen) {
 		int currOutTrack = 0;
 		int currEl = 0;
 		while (!in.isEndOfTrack()) {
@@ -189,22 +207,27 @@ public class Izziv4 {
 		int currEl = 0;
 		while (!allEOF) {
 			// najmanjši
-			iMin = Integer.MAX_VALUE;
+			currEl = Integer.MAX_VALUE;
 			allEOT = true;
 			allEOF = true;
 			for (int i = 0; i < ins.length; i++) {
 				if (!ins[i].isStraightEnd(runLen)) {
-					if (ins[i].current < iMin)
+					if (ins[i].current < ins[iMin].current)
 						iMin = i;
 					allEOT = false;
 				}
+			}
+			System.out.println("imin: " + iMin + " value: " + currEl);
+			for (int i = 0; i < ins.length; i++) {
 				if (!ins[i].isEndOfTrack())
 					allEOF = false;
 			}
+			
 			if (allEOT) {
-				for (int i = 0; i < ins.length; i++)
+				for (int i = 0; i < ins.length; i++) {
 					ins[i].resetRun();
-				continue;
+					continue;
+				}
 			}
 			// prepiši premakni
 			currEl = ins[iMin].current;
