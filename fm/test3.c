@@ -1,4 +1,3 @@
-//#include <fs/open.h>
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
@@ -39,14 +38,20 @@ int main(int argc, char* argv[])
 
 	// list dirents
 	DIR* dirp_working = NULL;
-	if (dirp_working = opendir(dir_working) == NULL)
+	if ((dirp_working = opendir(dir_working)) == NULL)
 	{
 		perror(sys_errlist[errno]);
 		exit(3);
 	}
-	struct dirent * = malloc(sizeof(struct dirent));
-	if (readdir(dirp_working))
-
+	struct dirent * dire_working = malloc(sizeof(struct dirent));
+	while ((dire_working = readdir(dirp_working)) != NULL)
+	{
+		printf(": %s\n", dire_working->d_name);
+	}
+	/*else
+	{
+		perror(sys_errlist[errno]);
+	}*/
 
 	printf("kthxbye\n");
 }
