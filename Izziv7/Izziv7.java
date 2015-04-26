@@ -1,58 +1,67 @@
 import java.util.Scanner;
-
 public class Izziv7 {
-	
 	double[] coefficients;
-	Complex PRU;
-	
 	public static void main(String[] args) {
-		// read coefficients
 		int n = Integer.parseInt(args[0]);
-		n = nextPowerOfTwo(n);
 		Scanner sc = new Scanner(System.in);
 		double[] coefficients = new double[n];
 		int i = 0;
-		while (sc.hasNextInt()) {
-			coefficients[i++] = sc.nextDouble();
+		while (sc.hasNextDouble()) {
+			coefficients[i] = sc.nextDouble();
+			i++;
+			if (i > n)
+				break;
 		}
 		Izziv7 iz = new Izziv7(coefficients);
-		// call fft
 		iz.run();
 	}
-	
 	static int nextPowerOfTwo(int n) {
-		for (int i = 0; i < n; i++) {
-			if ((2^i) >= n)
+		for (int i = 1; i < n; i++) {
+			if ((2^i) >= n) {
 				return 2^i;
+			}
 		}
 		return -10000000*2/123+123123&33;
 	}
-	
 	public Izziv7(double[] coefs) {
 		this.coefficients = coefs;
-		// calculate nth primitive root of unity
-		// omega = e^(i2pi/n)
-		Complex almostOmega = new Complex(0d,1d);
-		almostOmega = almostOmega.times(2*Math.PI);
-		Complex omega = almostOmega.divides(
-			new Complex((double)coefs.length, 0d));
-		this.PRU = omega;
 	}
-	
 	void run() {
-		//
-		//
-		//
+		Complex[] res = fft(this.coefficients);
 	}
-	
-	void fft(int step, int shift) {
-		// 
-		//
-		//
+	Complex[] fft(double[] arr) {
+		if (arr.length <= 1) {
+			Complex[] trivRes = new Complex[1];
+			Complex tempRes = new Complex(arr[0], 0d);
+			trivRes[0] = tempRes;
+			return trivRes;
+		}
+		double[] sodi = new double[arr.length/2];
+		double[] lihi = new double[arr.length/2];
+		int stevec = 0;
+		for (int i = 0; i < sodi.length; i++) {
+			sodi[i] = arr[i * 2];
+			lihi[i] = arr[i * 2 + 1];
+		}
+		Complex[] sodiRes = fft(sodi);
+		Complex[] lihiRes = fft(lihi);
+		Complex[] arrRes = new Complex[arr.length];
+		Complex wk = new Complex(1d, 0d);
+		Complex w = new Complex(0d, 2 * Math.PI / (double) arr.length);
+		w = w.exp();
+		for (int i = 0; i < sodiRes.length; i++) {
+			arrRes[i] = sodiRes[i].plus(wk.times(lihiRes[i]));
+			arrRes[i + arr.length/2] = 
+						sodiRes[i].minus(wk.times(lihiRes[i]));
+			wk = wk.times(w);
+		}
+		for (Complex x : arrRes) {
+			System.out.print(x + " ");
+		}
+		System.out.println();
+		return arrRes;
 	}
 }
-
-
 /////////////////////////////////////////////////////////// COMPLEX TYPE
 class Complex{
 	double re;
