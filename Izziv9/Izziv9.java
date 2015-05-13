@@ -51,8 +51,9 @@ public class Izziv9 {
 				this.x[i][j] = this.x[i-1][j-1] + this.x[i-1][j];
 			}
 		}
+		// printout
 		for (int i = 0; i < n; i++) {
-			for (int j = 1; j < n+1; j++) {
+			for (int j = 1; j < n + 1; j++) {
 				if (j <= i+1)
 					System.out.print(this.x[i][j] + " ");
 			}
@@ -60,7 +61,44 @@ public class Izziv9 {
 		}
 	}
 	
-	void jajca() { ;; }
+	void jajca() {
+		// initialize array according to n
+		this.x = new int[n][n+1];
+		// fill array with starting values
+		for (int i = 0; i < n; i++) {
+			this.x[1][i] = 1;
+		}
+		for (int i = 0; i < n; i++) {
+			this.x[i][0] = i;
+		}
+		// calculate the rest
+		for (int i = 1; i < n + 1; i++) {
+			for (int j = 1; j < n; j++) {
+				// find worst pair
+				int max = 0;
+				int r = i - 1;
+				for (int l = 0; l < i; l++) {
+					if (max(this.x[j-1][l], this.x[j][r]) > max) {
+						max = max(this.x[j-1][l], this.x[j][r]);
+					}	
+					r--;
+				}
+				// write worst + 1
+				this.x[j][i] = max + 1;
+			}
+		}
+		// printout
+		for (int i = 0; i < n; i++) {
+			for (int j = 1; j < n + 1; j++) {
+				System.out.print(this.x[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+
+	int max(int a, int b) {
+		return a > b ? a : b;
+	}
 	
 	void pomoc() {
 		System.out.printf("Napacna uporaba programa.\n");
