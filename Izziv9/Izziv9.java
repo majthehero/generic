@@ -10,19 +10,29 @@ public class Izziv9 {
 		i9.run();
 	}
 
-	public Izziv9 (args) {
-		this.n = Integer.parseInt(args[0]);
-		try (IndexOutOdBoundsException e) {
-
-
+	public Izziv9 (String[] args) {
+		try {
+			this.n = Integer.parseInt(args[1]);
+			if (args[0].equals("jajca")) {
+				this.k = Integer.parseInt(args[2]);
+				this.function = 1;
+			}
+			else {
+				this.k = this.n;
+				this.function = 0;
+			}
+		} catch (IndexOutOfBoundsException e) {
+			pomoc();
+			System.exit(1);
+		}
 	}
 
 	void run() {
-		switch (args[0]) {
-			case "pascal":
+		switch (this.function) {
+			case 0:
 				pascal();
 				break;
-			case "jajca":
+			case 1:
 				jajca();
 				break;
 			default:
@@ -32,14 +42,31 @@ public class Izziv9 {
 	}
 	
 	void pascal() {
+		// initialize array according to n
+		this.x = new int[n][n+1];
+		// first number is trivial case
+		this.x[0][1] = 1;
+		for (int i = 1; i < n; i++) {
+			for (int j = 1; j < n+1; j++) {
+				this.x[i][j] = this.x[i-1][j-1] + this.x[i-1][j];
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			for (int j = 1; j < n+1; j++) {
+				if (j <= i+1)
+					System.out.print(this.x[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 	
-	
+	void jajca() { ;; }
 	
 	void pomoc() {
 		System.out.printf("Napacna uporaba programa.\n");
 		System.out.printf("java Izziv9 <funkcija> <arg0> <arg1>\n");
-		System.out.printf("\n\tFunkcija je lahko 'pascal' za izpis pascalovega trikotnika\n");
+		System.out.printf("\n\tFunkcija je lahko 'pascal' za izpis ");
+		System.out.printf("pascalovega trikotnika\n");
 		System.out.printf("\tali 'jajca' za izpis tabele strategij za metanje jajc.\n");
 		System.out.printf("Funkcija 'pascal' sprejme kot argument globino, ");
 		System.out.printf("ki naj jo program izpiše.\n\n");
