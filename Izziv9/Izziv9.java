@@ -72,24 +72,19 @@ public class Izziv9 {
 			this.x[i][0] = i;
 		}
 		// calculate the rest
-
 		for (int y = 2; y < n; y++) { // št vrstice
-
 			int max = 0;
 			for (int x = 1; x < n+1; x++) { // št stolpca
-
 				// poišči najbolši par glede na slabšega v paru
 				int ly = 1;
 				int ry = y-1;
 				int lx = x-1;
 				int rx = x;
-
-				while (ly <= y && ry >= 0) {
+				while (ly < y && ry > 0) {
 		//		System.out.printf("x: %d y: %d :: ly: %d ry: %d lx: %d rx: %d\n",
 		//					x, y, ly, ry, lx, rx);
-				
-					int left = this.x[ly][lx];
-					int right = this.x[ry][rx];
+					int left = this.x[ry][lx];
+					int right = this.x[ly][rx];
 					int localmin;
 					localmin = left < right ? left : right;
 					if (localmin > max) {
@@ -100,7 +95,6 @@ public class Izziv9 {
 		//			System.out.printf("left: %d right: %d localmin: %d max: %d\n",
 		//				left, right, localmin, max);
 				}
-
 				this.x[y][x] = max + 1;
 		//		System.out.printf("%d %d  ", y, x);
 			}
