@@ -58,7 +58,7 @@ public class Izziv11 {
 	public Izziv11 (int n_vozl) {
 		this.povezave = new int[Izziv11.SIZE_INCREMENT][3];
 		this.n_vozl = n_vozl;
-		this.cene = new int[n_vozl + 1][n_vozl];
+		this.cene = new int[n_vozl][n_vozl];
 	}
 
 /**
@@ -66,9 +66,10 @@ public class Izziv11 {
 */
 	void izpis() {
 		for (int i = 0; i < cene.length; i++) {
+			System.out.printf("h%d: ", i);
 			for (int j = 0; j < cene[i].length; j++) {
 				if (cene[i][j] == 1073741823) {
-					System.out.print("inf ");
+					System.out.print("Inf ");
 				} else {
 					System.out.printf("%d ", cene[i][j]);
 				}
@@ -89,7 +90,7 @@ public class Izziv11 {
 		// zunanja zanka gre gledena maksimalno možno pot
 		// kar je seveda število vozlišč, da lahko še
 		// preverimo za negativne cikle
-		for (int maxPathLen = 1; maxPathLen <= n_vozl; maxPathLen++) {
+		for (int maxPathLen = 1; maxPathLen < n_vozl; maxPathLen++) {
 			
 			// za vsako vozlišče pogledamo naračunano ceno
 			// in minimalno izmed poti, ki vodi vanj
