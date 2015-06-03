@@ -1,0 +1,10 @@
+Preverjanje: test1
+  Izvajanje (java Izziv11 6): ok
+  Pravilnost: err
+Preverjanje: test2
+  Izvajanje (java Izziv11 8): ok
+  Pravilnost: err
+Preverjanje: test3
+  Izvajanje (java Izziv11 8): ok
+  Pravilnost: err
+Skupno stevilo tock: 0
