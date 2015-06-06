@@ -1,0 +1,36 @@
+Preverjanje: test-A-1
+  Izvajanje (java Naloga3 se): ok
+  Pravilnost: err
+Preverjanje: test-A-2
+  Izvajanje (java Naloga3 bb): err
+Preverjanje: test-A-3
+  Izvajanje (java Naloga3 rn): err
+Preverjanje: test-A-4
+  Izvajanje (java Naloga3 mm): err
+Preverjanje: test-A-5
+  Izvajanje (java Naloga3 all): err
+Preverjanje: test-B-1
+  Izvajanje (java Naloga3 se): err
+Preverjanje: test-B-2
+  Izvajanje (java Naloga3 bb): err
+Preverjanje: test-B-3
+  Izvajanje (java Naloga3 rn): err
+Preverjanje: test-B-4
+  Izvajanje (java Naloga3 mm): err
+Preverjanje: test-B-5
+  Izvajanje (java Naloga3 all): err
+Preverjanje: test-C-1
+  Izvajanje (java Naloga3 bb): err
+Preverjanje: test-C-2
+  Izvajanje (java Naloga3 rn): err
+Preverjanje: test-C-3
+  Izvajanje (java Naloga3 mm): err
+Preverjanje: test-C-4
+  Izvajanje (java Naloga3 aa): err
+Preverjanje: test-D-1
+  Izvajanje (java Naloga3 bb): err
+Preverjanje: test-D-2
+  Izvajanje (java Naloga3 rn): err
+Preverjanje: test-D-3
+  Izvajanje (java Naloga3 mm): err
+Skupno stevilo tock: 0
