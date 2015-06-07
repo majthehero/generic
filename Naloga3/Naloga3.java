@@ -10,69 +10,156 @@ public class Naloga3 {
 		// naredi sebe z argumentov
 		String alg = args[0];
 		Naloga3 n3 = new Naloga3(alg);
-		// reši
+		// res'i
 		n3.run();
 	}
 
+
+
+
+
+
+	int nasljendjiIndex (int index) {
+		
+		int[] stevila = new int[nV];
+		for (int v = 0; v < nV; v++) {
+			int stPovezav = 0;
+			for (int[] e : edges) {
+				if (e[0] == v || e[1] == v)
+					stPovezav++;
+			}
+			stevila[v] = stPovezav;
+		}
+		
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// pomembne
 	/** v resitev
-	 * m pomeni modro pobarvano, še ne pobarvano
+	 * m pomeni modro pobarvano, s'e ne pobarvano
 	 * z pomeni zeleno pobarvano, izbrano
-	 * r pomeni rdeèe pobarvano, neizbrano
+	 * r pomeni rdec'e pobarvano, neizbrano
 	 */
 	void sestopanje (int index) {
 
-// poglej, če je že preveč
-		if (index >= nV) return;
+// poglej, c'e je z'e prevec'
+		if (index >= nV) {
+			System.out.println("-");
+			return;
+		}
 
 
 
 // zeleno
 		resitev[index] = 'z';
 		System.out.println(index + "Z");
-		// poglej, če je rešitev
+		// poglej, c'e je res'itev
 		boolean done = true;
 		for (int[] e : edges) {
 			int v1 = e[0];
 			int v2 = e[1];
 			char c1 = resitev[v1];
 			char c2 = resitev[v2];
-			if (!(c1 == 'z' || c2 == 'z')) {
+			if (c1 != 'z' && c2 != 'z') {
 				done = false;
+				break;
 			}
 		}
-		// izpiši rešitev, če je rešitev
+		// izpis'i res'itev, c'e je res'itev
 		if (done) {
+			/* shrani res'itev, c'e je najboljs'a */
+			int stZ = 0;
+			for (char z : resitev) {
+				if (z == 'z')
+					stZ++;
+			}
+			if (stZ <= idealnaLen)
+				for (int i = 0; i < resitev.length; i++) {
+					idealna[i] = resitev[i];
+				}
+				idealnaLen = stZ;
+
+			/* izpis'i res'itev */
 			System.out.print("R: ");
 			for (int i = 0; i < resitev.length; i++) {
 				if (resitev[i] == 'z') 
 					System.out.print(i + " ");
 			}
 			System.out.println();
-			// če je idealna rešitev, jo shrani
-			int stZel = 0;
-			for (char z : resitev) {
-				if (z == 'z') stZel++;
-			}
-			if (stZel < idealnaLen) {
-				this.idealnaLen = stZel;
-				this.idealna = this.resitev;
-			}
-		} else {
-			// rekourzija
+		} else {	
+			// rekurzija
 			sestopanje(index + 1);
 		}
 
 
-// rdeče
+// rdec'e R
 		resitev[index] = 'r';
 		System.out.println(index + "R");
-		// poglej, če je konec vsega
+		// poglej, c'e je konec vsega
 		boolean fail = false;
 		for (int[] e : edges) {
 			int v1 = e[0];
 			int v2 = e[1];
-			if (v2 > index) {
+			if (v1 >= index) {
 				break;
 			}
 			char c1 = resitev[v1];
@@ -81,7 +168,7 @@ public class Naloga3 {
 				fail = true;
 			}
 		}
-		// sporoči neuspeh pop potrebi
+		// sporoc'i neuspeh pop potrebi
 		if (fail) {
 			System.out.println("-");
 		} else {
@@ -107,10 +194,10 @@ public class Naloga3 {
 	}
 	
 	void sestopanje () {
-		// klièi reševanje
+		// klic'i res'evanje
 		sestopanje(0);
-		// optimalna rešitev mora biti to
-		System.out.print("R: ");
+		// optimalna res'itev mora biti to
+		System.out.print("Resitev: ");
 		int i = 0;
 		for (char z : idealna) {
 			if (z == 'z') {
@@ -145,9 +232,9 @@ public class Naloga3 {
 	public Naloga3 (String alg) {
 		this.alg = alg;
 		Scanner sc = new Scanner(System.in);
-		// preberi število vozlišè
+		// preberi s'tevilo vozlis'c'
 		this.nV = sc.nextInt();
-		// preberi pare toèk, ki so vozlišèa
+		// preberi pare toc'k, ki so vozlis'c'a
 		this.edges = new int[nV][2];
 		try {
 			preberiVhod(sc);
@@ -156,13 +243,13 @@ public class Naloga3 {
 			System.exit(1);
 		}
 		sc.close();
-		// pripravi rešitev
+		// pripravi res'itev
 		this.resitev = new char[nV];
 		for (int i = 0; i < resitev.length; i++) {
 			resitev[i] = 'm'; 
 		}
 		idealna = new char[nV];
-		idealnaLen = Integer.MAX_VALUE;
+		idealnaLen = nV+1;
 	}
 	
 	// preberi vhod
@@ -170,7 +257,7 @@ public class Naloga3 {
 		int index = 0;
 		int i = 0;
 		while (sc.hasNextInt()) {
-			// dinamièno poveèaj array
+			// dinamic'no povec'aj array
 			if (index % SIZE_INCREMENT == 0) {
 				int[][] temp = this.edges;
 				this.edges = new int[temp.length + SIZE_INCREMENT][3];
@@ -183,7 +270,7 @@ public class Naloga3 {
 			}
 			index++;
 		}
-		// zmanjšaj tabelo do potrebne velikosti
+		// zmanjs'aj tabelo do potrebne velikosti
 		int[][] temp = this.edges;
 		this.edges = new int[index][3];
 		System.arraycopy(temp, 0, this.edges, 0, this.edges.length);
